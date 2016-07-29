@@ -20,6 +20,12 @@
     	    <version>0.0.2</version>
     	    <scope>provided</scope>
     	</dependency>
+    	<!--<dependency>
+    		<groupId>org.projectlombok</groupId>
+    		<artifactId>lombok</artifactId>
+    		<version>1.16.10</version>
+    		<scope>provided</scope> 
+    	</dependency>-->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -74,7 +80,7 @@
                     </goals>
                     <configuration>
                       <sources>
-                        <source>target/generated-sources/annotations</source>
+                        <source>${project.build.directory}/generated-sources/annotations</source>
                       </sources>
                     </configuration>
                   </execution>
