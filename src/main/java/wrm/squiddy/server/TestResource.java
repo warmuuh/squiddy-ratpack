@@ -1,14 +1,21 @@
 package wrm.squiddy.server;
 
+import javax.inject.Inject;
 import javax.inject.Singleton;
+
+import lombok.Setter;
+import rx.Single;
+import wrm.squiddy.db.TestRepository;
 
 @Singleton
 public class TestResource {
 
 
-    public TestDescription getTest(String id) {
-        TestDescription test = new TestDescription();
-        test.setId("123");
-        return test;
+	@Inject @Setter
+	TestRepository repository;
+	
+	
+    public Single<TestDescription> getTest(String id) {
+    	return repository.getTest(id);
     }
 }

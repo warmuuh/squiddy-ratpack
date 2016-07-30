@@ -1,14 +1,9 @@
 package wrm.squiddy.server;
 
+import lombok.Data;
+
+@Data
 public class TestDescription {
 
     String id;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 }
