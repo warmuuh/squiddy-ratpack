@@ -7,15 +7,13 @@ import com.mongodb.reactivestreams.client.MongoDatabase;
 
 import wrm.hardwire.Module;
 
-@Module
+@Module(external=MongoDatabase.class)
 public class DatabaseModule extends DatabaseModuleBase {
 	
-	//TODO: hardwire external does not work!
 	@Override
-	protected void wireTestRepository(TestRepository vTestRepository) {
-		super.wireTestRepository(vTestRepository);
+	protected MongoDatabase createMongoDatabase() {
 		MongoClient mongoClient = MongoClients.create("mongodb://localhost");
-		vTestRepository.setDb(mongoClient.getDatabase("mydb"));
+		return mongoClient.getDatabase("mydb");
 	}
 }
  

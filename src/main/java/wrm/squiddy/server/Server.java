@@ -13,6 +13,7 @@ import ratpack.handling.Chain;
 import ratpack.jackson.Jackson;
 import ratpack.rx.RxRatpack;
 import ratpack.server.RatpackServer;
+import rx.Single;
 
 @Singleton
 public class Server {
@@ -21,7 +22,7 @@ public class Server {
     TestResource testResource;
 
     @PostConstruct
-    @SneakyThrows
+    @SneakyThrows 
     public void startUp() {
     	RxRatpack.initialize();
         RatpackServer.start(server -> server.serverConfig(c -> c.port(8080))
@@ -33,9 +34,10 @@ public class Server {
     			.get(ctx -> ctx.render("Hello World!"))
     			.get("test/:id",
     						ctx -> {
-    							val name = ctx.getPathTokens().get("id");
-    							val res = testResource.getTest(name);
-    							res.map(Jackson::json).subscribe(ctx::render);
+    							String name = ctx.getPathTokens().get("id");
+    							testResource.getTest(name)
+    								.map(Jackson::json)
+    								.subscribe(ctx::render);
     						});
     }
 }

@@ -5,6 +5,6 @@ import wrm.squiddy.db.DatabaseModule;
 
 @Module(imports=DatabaseModule.class)
 public class ServerModule extends ServerModuleBase {
-      
+       
     
 }
