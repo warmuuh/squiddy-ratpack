@@ -32,12 +32,15 @@ public class Server {
     Chain setupRoutes(Chain chain){
     	return chain
     			.get(ctx -> ctx.render("Hello World!"))
-    			.get("test/:id",
-    						ctx -> {
-    							String name = ctx.getPathTokens().get("id");
-    							testResource.getTest(name)
-    								.map(Jackson::json)
-    								.subscribe(ctx::render);
-    						});
+    			.get("tests/:id",
+    						ctx -> ctx.render(testResource.getTest(ctx.getPathTokens().get("id"))))
+    			.get("tests",
+						ctx -> ctx.render(testResource.getAllTests()))
+    			.post("tests",
+						ctx -> {
+							ctx.parse(Jackson.fromJson(TestDescription.class))
+							.map(test -> testResource.addTest(test))
+							.operation(ctx::render);
+						});
     }
 }

@@ -40,6 +40,12 @@ public class BsonDsl {
 	};
 	
 	@SneakyThrows
+	public static Document bson(Object obj){
+		String json = mapper.writeValueAsString(obj);
+		return Document.parse(json);
+	}
+	
+	@SneakyThrows
 	public static <T> T fromBson(Document doc, Class<T> c) {
 		return mapper.readValue(doc.toJson(), c);
 	}
