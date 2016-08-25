@@ -25,7 +25,7 @@ public class Server {
     @SneakyThrows 
     public void startUp() {
     	RxRatpack.initialize();
-        RatpackServer.start(server -> server.serverConfig(c -> c.port(8080))
+        RatpackServer.start(server -> server.serverConfig(c -> c.development(true).port(8080))
                                                 .handlers(this::setupRoutes));
     }
     
@@ -34,13 +34,17 @@ public class Server {
     			.get(ctx -> ctx.render("Hello World!"))
     			.get("tests/:id",
     						ctx -> ctx.render(testResource.getTest(ctx.getPathTokens().get("id"))))
-    			.get("tests",
-						ctx -> ctx.render(testResource.getAllTests()))
+//    			.get("tests",
+//						ctx -> ctx.render(testResource.getAllTests()))
     			.post("tests",
 						ctx -> {
-							ctx.parse(Jackson.fromJson(TestDescription.class))
-							.map(test -> testResource.addTest(test))
-							.operation(ctx::render);
+//							ctx.parse(Jackson.fromJson(TestDescription.class))
+//							.map(test -> {
+//								return testResource.addTest(test);	
+//							})
+//							.operation(result -> ctx.render(result));
+							ctx.render(ctx.parse(Jackson.fromJson(TestDescription.class)).map(testResource::addTest));
+							
 						});
     }
 }

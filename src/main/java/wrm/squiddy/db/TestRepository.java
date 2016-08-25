@@ -13,6 +13,7 @@ import com.mongodb.reactivestreams.client.FindPublisher;
 import com.mongodb.reactivestreams.client.MongoDatabase;
 import com.mongodb.reactivestreams.client.Success;
 
+import lombok.AllArgsConstructor;
 import lombok.Setter;
 import static rx.RxReactiveStreams.*;
 
@@ -24,8 +25,9 @@ import wrm.squiddy.server.TestDescription;
 @Singleton
 public class TestRepository {
 
-	@Inject @Setter
-	MongoDatabase db;
+	
+	@Setter
+	private MongoDatabase db;
 	
 	 
 	public Single<TestDescription> getTest(String id) {
@@ -44,7 +46,5 @@ public class TestRepository {
 		Publisher<Success> insertion = db.getCollection("tests").insertOne(bson(newTest));
 		return toSingle(insertion);
 	}
-	
-	
 	
 }
